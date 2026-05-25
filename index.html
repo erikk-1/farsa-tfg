@@ -3,86 +3,461 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso al Documento - TFC</title>
+    <title>Defensa TFC - Roberto Cristian</title>
+    <!-- Tailwind CSS (Versión segura por CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: white; margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
-        /* Animación inicial de "Cargando" para dar falsa seguridad */
-        #loader { transition: opacity 0.5s ease; }
-        #content { display: none; opacity: 0; transition: opacity 1s ease; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #0f172a; 
+            color: white; 
+            margin: 0; 
+            overflow: hidden; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
         
-        .pulse-red { animation: pulseRed 2s infinite; }
-        @keyframes pulseRed {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        /* Contenedor principal rígido (Aspecto 16:9) */
+        .presentation-frame {
+            width: 1280px;
+            height: 720px;
+            background-color: #0f172a;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .slide { 
+            display: none; 
+            opacity: 0; 
+            transition: opacity 0.3s ease; 
+            width: 100%;
+            height: 100%;
+            padding: 60px;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .slide.active { 
+            display: flex; 
+            opacity: 1; 
+        }
+
+        /* Estilos de tipografía de presentación */
+        .slide-title { 
+            font-size: 42px; 
+            font-weight: 800; 
+            color: #f8fafc; 
+            margin-bottom: 40px; 
+            border-left: 6px solid #3b82f6; 
+            padding-left: 20px; 
+        }
+        .slide-number { 
+            position: absolute; 
+            top: 40px; 
+            right: 60px; 
+            font-size: 70px; 
+            font-weight: 900; 
+            color: rgba(255,255,255,0.05); 
+        }
+
+        /* Gráfico Seguro (Grid Layout) */
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            height: 280px;
+            align-items: end;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 15px;
+            margin-top: 30px;
+        }
+        .telemetry-bar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+        }
+        .telemetry-bar {
+            width: 80%;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            background-image: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+        }
+        .telemetry-val {
+            position: absolute;
+            top: -40px;
+            font-size: 32px;
+            font-weight: 900;
+        }
+        .telemetry-label {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+            color: #94a3b8;
+            height: 50px;
         }
     </style>
 </head>
-<body class="p-4 sm:p-8">
+<body>
 
-    <div id="loader" class="flex flex-col items-center justify-center text-center">
-        <i class="fa-solid fa-spinner fa-spin text-5xl text-blue-500 mb-6"></i>
-        <h2 class="text-2xl font-semibold text-slate-200 mb-2">Conectando...</h2>
-        <p class="text-slate-400">Descargando TFC_Roberto_Cristian.pdf</p>
-    </div>
-
-    <div id="content" class="max-w-lg w-full bg-slate-800 rounded-2xl shadow-2xl border border-red-900/50 overflow-hidden text-center mt-4">
+    <!-- Marco Fijo de la Presentación -->
+    <div class="presentation-frame">
         
-        <div class="bg-red-600 p-6 flex flex-col items-center">
-            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 pulse-red">
-                <i class="fa-solid fa-triangle-exclamation text-4xl text-red-600"></i>
+        <!-- Logo Corporativo Constante -->
+        <div class="absolute top-8 left-12 z-50 flex items-center gap-4">
+            <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center text-white font-bold text-3xl border-2 border-white">
+                C
             </div>
-            <h1 class="text-2xl font-bold text-white tracking-wide uppercase">Auditoría en curso</h1>
+            <div>
+                <h1 class="text-2xl font-bold tracking-wider text-white leading-none">CCC</h1>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Centro Oficial de FP</p>
+            </div>
         </div>
 
-        <div class="p-8 space-y-6">
-            <h2 class="text-xl font-semibold text-white">Estimado Tribunal:</h2>
+        <!-- 0. PORTADA (QR REAL) -->
+        <div class="slide active items-center text-center bg-gradient-to-br from-slate-900 to-slate-800">
+            <h1 class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-red-500 mb-6 uppercase tracking-tight">LA INGENIERÍA SOCIAL</h1>
+            <p class="text-2xl font-light text-slate-300 mb-10 max-w-4xl">Cómo el factor humano define el límite de la ciberseguridad corporativa.</p>
             
-            <p class="text-slate-300 text-left leading-relaxed">
-                Si están leyendo este mensaje en sus teléfonos móviles, mi auditoría física ha sido un éxito. <strong>Acaban de ser víctimas de un ataque de Quishing en tiempo real.</strong>
-            </p>
-
-            <div class="bg-slate-900 p-4 rounded-lg border-l-4 border-red-500 text-left">
-                <p class="text-sm text-slate-400 italic">
-                    "Han escaneado un código QR no verificado y accedido a un dominio desconocido utilizando sus dispositivos personales, guiados únicamente por la confianza en el contexto de esta presentación."
-                </p>
+            <div class="bg-white p-5 rounded-2xl shadow-2xl mb-6">
+                <!-- QR REAL VINCULADO A GITHUB -->
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://erikk-1.github.io/farsa-tfg/" alt="QR Auditoria TFC" class="w-52 h-52">
+            </div>
+            
+            <div class="bg-slate-800 px-8 py-3 rounded-full border border-slate-700 animate-pulse shadow-lg">
+                <span class="text-blue-400 font-bold tracking-wide"><i class="fa-solid fa-qrcode mr-2"></i> Escanea para acceder a la versión digital de la auditoría</span>
             </div>
 
-            <p class="text-slate-300 text-left leading-relaxed text-sm">
-                Si esto fuera un ataque real, sus dispositivos podrían estar descargando silenciosamente un <em>payload</em> malicioso, o esta página podría estar simulando un inicio de sesión de Microsoft para robar sus credenciales.
-            </p>
-
-            <p class="text-blue-400 font-semibold text-lg pt-4 border-t border-slate-700">
-                Esta es la vulnerabilidad humana que mi TFC busca demostrar.
-            </p>
+            <div class="absolute bottom-10 left-12 text-left">
+                <p class="font-bold text-white text-xl">Roberto Costache</p>
+                <p class="text-slate-400 mt-1">Tutor: Jesús Robles | ASIR 2025-2026</p>
+            </div>
         </div>
 
-        <div class="bg-slate-900 p-6">
-            <p class="text-sm text-slate-400 mb-4">Puede descargar el documento real y seguro a continuación:</p>
-            <a href="TFC_Roberto_Cristian.pdf" download="TFC_Roberto_Cristian_ASIR.pdf" class="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-lg border border-blue-400">
-                <i class="fa-solid fa-file-pdf mr-2"></i> Descargar TFC Oficial
-            </a>
+        <!-- 1. EL PROBLEMA (Perspectiva de Contexto) -->
+        <div class="slide">
+            <div class="slide-number">01</div>
+            <h2 class="slide-title">El Problema: El eslabón más débil</h2>
+            
+            <div class="grid grid-cols-2 gap-16 mt-8">
+                <div class="bg-slate-800/60 p-10 rounded-2xl border border-slate-700 text-center">
+                    <i class="fa-solid fa-server text-6xl text-slate-500 mb-6"></i>
+                    <h3 class="text-3xl font-bold mb-4">Barreras Técnicas</h3>
+                    <p class="text-slate-400 text-lg leading-relaxed">Configuración de servidores, securización de servicios y segmentación mediante VLANs. Romperlas a la fuerza es un proceso costoso y complejo.</p>
+                </div>
+                
+                <div class="bg-red-900/20 p-10 rounded-2xl border border-red-900/50 text-center shadow-[0_0_30px_rgba(239,68,68,0.15)]">
+                    <i class="fa-solid fa-user-lock text-6xl text-red-500 mb-6"></i>
+                    <h3 class="text-3xl font-bold mb-4 text-red-400">Ingeniería Social</h3>
+                    <p class="text-slate-300 text-lg leading-relaxed">Explotar vulnerabilidades humanas (curiosidad, urgencia). Es mucho más barato, rápido y efectivo engañar a un empleado.</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <p class="text-2xl font-bold text-slate-400">«Podemos tener una infraestructura tecnológica perfecta, pero si el usuario falla, todo el sistema cae.»</p>
+            </div>
         </div>
+
+        <!-- 2. BAITING (Perspectiva del Atacante) -->
+        <div class="slide">
+            <div class="slide-number">02</div>
+            <h2 class="slide-title">El Laboratorio: Baiting y Bloqueo en Windows</h2>
+            
+            <!-- Etiqueta de Contexto -->
+            <div class="absolute top-10 right-32 flex items-center gap-2 bg-slate-800 border border-slate-600 px-4 py-2 rounded-full text-xs text-slate-300 font-bold uppercase tracking-widest">
+                <i class="fa-solid fa-calendar-day text-blue-400"></i> Práctica real: 1 Jornada Laboral
+            </div>
+
+            <div class="flex gap-16 items-center mt-6">
+                <div class="w-1/3 text-center bg-slate-800/50 p-10 rounded-3xl border border-slate-700 h-full flex flex-col justify-center items-center">
+                    <i class="fa-brands fa-usb text-9xl text-blue-500 mb-6"></i>
+                    <h3 class="text-3xl font-bold text-white">5 Cebos USB</h3>
+                    <p class="text-slate-400 mt-2">Formato FAT32</p>
+                </div>
+                
+                <div class="w-2/3 space-y-8">
+                    <!-- Perspectiva: El obstáculo del sistema -->
+                    <div class="bg-slate-800 p-6 rounded-2xl border-l-4 border-red-500">
+                        <h4 class="text-2xl font-bold text-red-400 mb-3"><i class="fa-brands fa-windows mr-2"></i> Defensa del Sistema: Autorun bloqueado</h4>
+                        <p class="text-slate-300 text-lg">Las actualizaciones modernas de Windows cierran la puerta. El código no se ejecuta automáticamente al conectar el hardware.</p>
+                    </div>
+                    
+                    <!-- Perspectiva: La táctica del atacante -->
+                    <div class="bg-slate-800 p-6 rounded-2xl border-l-4 border-orange-500">
+                        <h4 class="text-2xl font-bold text-orange-400 mb-3"><i class="fa-solid fa-user-ninja mr-2"></i> Táctica: Ingeniería Social Pura</h4>
+                        <p class="text-slate-300 text-lg mb-4">Uso de archivos con nombres de gran impacto y trasfondo oculto para que el usuario haga el trabajo (doble clic) por el atacante.</p>
+                        <div class="flex gap-4 font-mono text-sm">
+                            <span class="bg-slate-900 px-4 py-2 rounded text-orange-300 border border-slate-700"><i class="fa-brands fa-html5 mr-2"></i>Aldaro_Contratos_Personal.html</span>
+                            <span class="bg-slate-900 px-4 py-2 rounded text-orange-300 border border-slate-700"><i class="fa-brands fa-html5 mr-2"></i>Audemars_Piguet_Precios.html</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. QUISHING (Perspectiva del Atacante) -->
+        <div class="slide">
+            <div class="slide-number">03</div>
+            <h2 class="slide-title">El Obstáculo del Quishing: Migración Técnica</h2>
+            
+            <div class="flex gap-10 items-center mt-2">
+                <!-- Cartelera (Left) -->
+                <div class="w-1/3 flex justify-center items-center">
+                    <!-- Fallback ('onerror') para que no se rompa el diseño si no encuentra la imagen local -->
+                    <img src="cartelera_nueva.png" onerror="this.onerror=null; this.src='https://placehold.co/400x600/1e293b/cbd5e1?text=Cartelera+Local+Activa%5Cn(Guarda+cartelera_nueva.png%5Cnjunto+a+este+HTML)'" alt="Cartelera Selecta Quishing" class="rounded-xl shadow-2xl border-4 border-slate-700 max-h-[450px] object-contain transform hover:scale-105 transition-transform">
+                </div>
+                
+                <!-- Contenido URLs (Right) -->
+                <div class="w-2/3 space-y-6">
+                    <p class="text-lg text-slate-300">Despliegue de cartelería en máquinas de café Selecta ofreciendo descuentos.</p>
+                    
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-6">
+                        <!-- Perspectiva: Fallo del atacante -->
+                        <div>
+                            <span class="text-xs font-black text-red-500 tracking-widest uppercase block mb-2">Entorno Gratuito: Interacción Nula</span>
+                            <div class="flex items-center gap-4 bg-slate-900 p-4 rounded-xl border border-red-900/50">
+                                <i class="fa-solid fa-triangle-exclamation text-red-500 text-2xl"></i>
+                                <span class="font-mono text-red-400 text-xl line-through decoration-red-500">https://pache1.pythonanywhere.com</span>
+                            </div>
+                        </div>
+
+                        <!-- Perspectiva: Corrección del atacante -->
+                        <div>
+                            <span class="text-xs font-black text-green-500 tracking-widest uppercase block mb-2">Infraestructura Profesional: Éxito</span>
+                            <div class="flex items-center gap-4 bg-slate-900 p-5 rounded-xl border border-green-500/50 shadow-[0_0_30px_rgba(34,197,94,0.1)]">
+                                <i class="fa-solid fa-shield-check text-green-500 text-3xl"></i>
+                                <span class="font-mono text-green-400 text-2xl font-bold">https://maquinaselectavending.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-8 mt-6 justify-center font-bold text-slate-400 text-xs tracking-widest">
+                        <span><i class="fa-brands fa-php text-blue-400 text-lg mr-2"></i> MIGRACIÓN PHP</span>
+                        <span><i class="fa-solid fa-server text-slate-300 text-lg mr-2"></i> HOSTING PRO</span>
+                        <span><i class="fa-solid fa-file-code text-yellow-500 text-lg mr-2"></i> .HTACCESS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. TELEMETRÍA (Resultados) -->
+        <div class="slide">
+            <div class="slide-number">04</div>
+            <h2 class="slide-title">Análisis de Resultados y Telemetría</h2>
+            
+            <p class="text-xl italic text-slate-400 text-center -mt-6 mb-2">"Los datos obtenidos en una única jornada son contundentes"</p>
+
+            <!-- Gráfico de Barras Fijo y Seguro -->
+            <div class="telemetry-grid">
+                <div class="telemetry-bar-container">
+                    <div class="telemetry-bar bg-blue-600" style="height: 26%;">
+                        <span class="telemetry-val text-blue-400">5</span>
+                    </div>
+                    <span class="telemetry-label">USBs<br>Preparados</span>
+                </div>
+
+                <div class="telemetry-bar-container">
+                    <div class="telemetry-bar bg-blue-500" style="height: 10%;">
+                        <span class="telemetry-val text-blue-300">2</span>
+                    </div>
+                    <span class="telemetry-label">Dispositivos<br>Únicos</span>
+                </div>
+
+                <div class="telemetry-bar-container">
+                    <div class="telemetry-bar bg-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.5)]" style="height: 21%;">
+                        <span class="telemetry-val text-blue-200">4</span>
+                    </div>
+                    <span class="telemetry-label text-blue-300 font-bold">Inserciones<br>Totales</span>
+                </div>
+
+                <div class="telemetry-bar-container">
+                    <div class="telemetry-bar bg-red-600 shadow-[0_0_30px_rgba(220,38,38,0.4)]" style="height: 100%;">
+                        <span class="telemetry-val text-red-400">19</span>
+                    </div>
+                    <span class="telemetry-label text-red-300 font-bold">Interacciones<br>(Quishing QR)</span>
+                </div>
+            </div>
+            
+            <div class="mt-8 bg-slate-800 p-6 rounded-xl border border-slate-700 flex justify-center gap-16 mx-auto w-11/12">
+                <div class="text-center">
+                    <p class="text-slate-400 text-sm font-bold uppercase mb-2">Altísimo Riesgo (USB)</p>
+                    <p class="text-2xl font-black text-white">Hardware compartido entre compañeros</p>
+                </div>
+                <div class="text-center border-l border-slate-600 pl-16">
+                    <p class="text-slate-400 text-sm font-bold uppercase mb-2">Cero Verificación (QR)</p>
+                    <p class="text-2xl font-black text-red-400">19 Formularios con correos reales</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. MITIGACIÓN TÉCNICA (Perspectiva del Defensor/ASIR) -->
+        <div class="slide">
+            <div class="slide-number">05</div>
+            <h2 class="slide-title">Propuesta de Mitigación: Zero Trust (Técnica)</h2>
+            
+            <div class="grid grid-cols-2 gap-10 mt-6 h-full">
+                <div class="bg-slate-800/80 p-8 rounded-2xl border-t-4 border-blue-500">
+                    <h3 class="text-3xl font-bold mb-8 flex items-center text-white"><i class="fa-solid fa-shield-cat text-blue-400 mr-4"></i> Bloqueo de Baiting</h3>
+                    <ul class="space-y-6 text-lg">
+                        <li class="flex items-start gap-4">
+                            <i class="fa-solid fa-lock text-blue-400 mt-1"></i>
+                            <div>
+                                <strong class="text-blue-200 block">Directivas de Grupo (GPO)</strong>
+                                <span class="text-slate-400 text-sm block mt-1">Implementación en Active Directory para denegar automáticamente el almacenamiento masivo.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <i class="fa-solid fa-list-check text-blue-400 mt-1"></i>
+                            <div>
+                                <strong class="text-blue-200 block">Listas Blancas de Hardware</strong>
+                                <span class="text-slate-400 text-sm block mt-1">Solo hardware registrado previamente por el departamento de TI es válido.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-slate-800/80 p-8 rounded-2xl border-t-4 border-red-500">
+                    <h3 class="text-3xl font-bold mb-8 flex items-center text-white"><i class="fa-solid fa-globe text-red-400 mr-4"></i> Bloqueo de Quishing</h3>
+                    <ul class="space-y-6 text-lg">
+                        <li class="flex items-start gap-4">
+                            <i class="fa-solid fa-filter text-red-400 mt-1"></i>
+                            <div>
+                                <strong class="text-red-200 block">Filtros DNS Perimetrales</strong>
+                                <span class="text-slate-400 text-sm block mt-1">Bloqueo de acceso a dominios de reciente creación o reputación sospechosa antes de cargar.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <i class="fa-solid fa-shield-halved text-red-400 mt-1"></i>
+                            <div>
+                                <strong class="text-red-200 block">Arquitectura Confianza Cero</strong>
+                                <span class="text-slate-400 text-sm block mt-1">La red interna debe protegerse incluso de sus propios usuarios.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. MITIGACIÓN ORGANIZATIVA (Perspectiva del Defensor/ASIR) -->
+        <div class="slide">
+            <div class="slide-number">06</div>
+            <h2 class="slide-title">Propuesta de Mitigación: Bastionado Organizativo</h2>
+            
+            <div class="flex gap-12 items-center mt-12">
+                <div class="w-2/5 bg-slate-800 rounded-3xl p-10 text-center border border-slate-700 shadow-2xl">
+                    <i class="fa-solid fa-users-gear text-8xl text-green-400 mb-6 drop-shadow-[0_0_20px_rgba(34,197,94,0.3)]"></i>
+                    <h3 class="text-3xl font-bold text-white mb-2">El Cortafuegos Humano</h3>
+                    <p class="text-slate-400 text-sm">Sustitución de las charlas teóricas inefectivas.</p>
+                </div>
+                
+                <div class="w-3/5 space-y-8">
+                    <div class="bg-slate-800/60 p-8 rounded-xl border border-slate-700 flex gap-6 items-center">
+                        <div class="w-14 h-14 bg-green-900/50 rounded-full flex items-center justify-center text-green-400 shrink-0"><i class="fa-solid fa-bolt text-2xl"></i></div>
+                        <div>
+                            <strong class="text-white text-xl block mb-1">Simulacros Sorpresa Periódicos</strong>
+                            <p class="text-slate-400">Auditorías controladas para entrenar la capacidad de detección en la rutina diaria.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-slate-800/60 p-8 rounded-xl border border-slate-700 flex gap-6 items-center">
+                        <div class="w-14 h-14 bg-green-900/50 rounded-full flex items-center justify-center text-green-400 shrink-0"><i class="fa-solid fa-brain text-2xl"></i></div>
+                        <div>
+                            <strong class="text-white text-xl block mb-1">Entornos Controlados</strong>
+                            <p class="text-slate-400">Obligar al personal a aprender de sus propios errores de forma segura, generando una auténtica cultura de ciberseguridad.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. CONCLUSIONES -->
+        <div class="slide text-center items-center">
+            <div class="slide-number">07</div>
+            <i class="fa-solid fa-quote-left text-7xl text-slate-700 mb-8"></i>
+            <h2 class="text-4xl font-light text-white leading-relaxed max-w-5xl mb-16">
+                "La seguridad perimetral de una empresa es una ilusión si no se conciencia a la plantilla. Un simple trozo de papel o un USB abandonado pueden tumbar la red. <strong class="text-blue-400">La ciberseguridad termina exactamente dónde empieza la curiosidad de los usuarios.</strong>"
+            </h2>
+            
+            <div class="w-full max-w-5xl pt-10 border-t border-slate-800 grid grid-cols-3 gap-12">
+                <div>
+                    <i class="fa-solid fa-building text-3xl text-slate-500 mb-4"></i>
+                    <p class="text-white font-bold text-lg">Dirección y Personal</p>
+                    <p class="text-sm text-slate-500 mt-1">Por permitir este escenario real</p>
+                </div>
+                <div class="transform scale-110">
+                    <i class="fa-solid fa-chalkboard-user text-4xl text-blue-400 mb-4 drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]"></i>
+                    <p class="text-white font-black text-xl">D. Jesús Robles</p>
+                    <p class="text-sm text-blue-300 mt-1">Tutor del Proyecto</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-users text-3xl text-slate-500 mb-4"></i>
+                    <p class="text-white font-bold text-lg">Miembros del Tribunal</p>
+                    <p class="text-sm text-slate-500 mt-1">Gracias por su atención</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controles Inferiores Flotantes -->
+        <div class="absolute bottom-8 right-10 flex gap-4 z-50">
+            <button onclick="prevSlide()" class="w-14 h-14 bg-slate-800 hover:bg-slate-700 text-white rounded-full flex items-center justify-center shadow-lg transition border border-slate-600 focus:outline-none">
+                <i class="fa-solid fa-arrow-left text-xl"></i>
+            </button>
+            <button onclick="nextSlide()" class="w-14 h-14 bg-blue-600 hover:bg-blue-500 text-white rounded-full flex items-center justify-center shadow-lg transition border border-blue-400 focus:outline-none">
+                <i class="fa-solid fa-arrow-right text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- Indicadores de Posición -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex gap-3 z-50" id="dots"></div>
+
     </div>
 
+    <!-- Script de Navegación -->
     <script>
-        setTimeout(() => {
-            const loader = document.getElementById('loader');
-            const content = document.getElementById('content');
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.getElementById('dots');
+
+        // Generar puntos dinámicos
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = `w-3 h-3 rounded-full transition-all duration-300 ${index === 0 ? 'bg-blue-500 w-8' : 'bg-slate-600'}`;
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = dotsContainer.children;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('bg-blue-500', 'w-8');
+            dots[currentSlide].classList.add('bg-slate-600', 'w-3');
             
-            loader.style.opacity = '0';
-            setTimeout(() => {
-                loader.style.display = 'none';
-                content.style.display = 'block';
-                // Trigger reflow para que la transición de opacidad funcione
-                void content.offsetWidth;
-                content.style.opacity = '1';
-            }, 500);
-        }, 2500); // 2.5 segundos de falsa carga
+            currentSlide = (n + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.remove('bg-slate-600', 'w-3');
+            dots[currentSlide].classList.add('bg-blue-500', 'w-8');
+        }
+
+        function nextSlide() { showSlide(currentSlide + 1); }
+        function prevSlide() { showSlide(currentSlide - 1); }
+
+        // Navegación por teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
     </script>
 </body>
 </html>
